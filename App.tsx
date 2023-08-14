@@ -11,16 +11,18 @@ import {NavigationContainer} from '@react-navigation/native';
 import MyStack from './src/navigation/Navigation'
 import Navigation from './src/navigation/Navigation';
 import { Provider } from 'react-redux';
-import store from './src/state/store';
+import { FavoriteProvider } from './src/state/favoriteContext';
+// import store from './src/state/store';
+FavoriteProvider
 
 function App() {
   
   return (
-    <Provider store={store}>
+    <FavoriteProvider>
     <NavigationContainer>
     <MyStack />
    </NavigationContainer>
-   </Provider>
+   </FavoriteProvider>
   );
 }
 
