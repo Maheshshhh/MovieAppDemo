@@ -8,22 +8,29 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {fetchMovieDetails} from '../api/moviesApi';
 import Asset from '../assets/Asset';
 import {useRoute} from '@react-navigation/native';
 import {image500} from '../api/moviesApi';
+import { FavoriteContext } from '../state/favoriteContext';
 
 var {width, height} = Dimensions.get('window');
 
-const Details = ({navigation}) => {
-  const {params: item} = useRoute();
+const Details = ({navigation, route}) => {
+   const {params: item} = useRoute();
   const [movie, setMovie] = useState({});
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
-  const [isFavourite, toggleFavourite] = useState(false);
+  // const [isFavourite, toggleFavourite] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const isFavorite = favorites && favorites.some((favMovie)=> favMovie,id === movie.id)
+  // const [isFavorite, setIsFavorite] = useState(favorites.some((favMovie)=>favMovie.id === movie.id));
+
+  const { movieName } = route.params;
+  const { favorites, addToFavorites } = useContext(FavoriteContext);
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +46,14 @@ const Details = ({navigation}) => {
     }
   };
   const addToFavorite = () => {
-    Alert.alert('Added to Favorites')
+    if (!isFavorite){
+      addToFavorites(movie);
+      Alert.alert('Added to Favorite')
+//setIsFavorite(true);
+    } else {
+      Alert.alert('Already added')
+    }
+   
   };
 
   const addToWatchList = () => {
