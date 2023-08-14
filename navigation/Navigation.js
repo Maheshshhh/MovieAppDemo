@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import { Image } from 'react-native';
 import Asset from '../assets/Asset';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,9 +47,10 @@ const MyTabs = () => {
   );
 };
 
+
 export default MyStack = () => {
   return (
-    // <Provider store={store}>
+    <Provider store={store}>
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
@@ -65,6 +67,6 @@ export default MyStack = () => {
       <Stack.Screen name="WatchList" component={Watchlist}/>
       <Stack.Screen name="Register" component={Register}/>
     </Stack.Navigator>
-    // </Provider>
+     </Provider>
   );
 };
